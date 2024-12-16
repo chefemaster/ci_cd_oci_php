@@ -1,0 +1,6 @@
+services:
+  web:
+    container_name: sym_test
+    image: sym_test
+    ports:
+      - "8080:80"
