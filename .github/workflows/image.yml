@@ -5,12 +5,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:      
       matrix:
         platform:
           - linux/arm64
-
     steps:
       - uses: actions/checkout@v2
                 
@@ -25,22 +24,38 @@ jobs:
 
       - name: Install prerequisites
         run: |
-          sudo apt-get update -y          
+          sudo apt-get update -y
 
-      - name: Login to OCI
-        uses: docker/login-action@v3
+      - name: Setup PHP with PECL extension
+        uses: shivammathur/setup-php@v2
         with:
-          registry: sa-saopaulo-1.ocir.io
-          username: ${{ secrets.OCI_USERNAME }}
-          password: ${{ secrets.OCI_AUTH_TOKEN }}
+            php-version: '8.4'
+            extensions: zip, mbstring, exif, intl
+    
+      - name: Change Directory
+        run: cd /github/workspace
+    
+      - name: Install Composer
+        uses: php-actions/composer@v6
+        with:
+          php_version: '8.4'
+          command: install
+          working_dir: "project"
+
+    #   - name: Login to OCI
+    #     uses: docker/login-action@v3
+    #     with:
+    #       registry: sa-saopaulo-1.ocir.io
+    #       username: ${{ secrets.OCI_USERNAME }}
+    #       password: ${{ secrets.OCI_AUTH_TOKEN }}
       
-      - name: Push docker image to OCI
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          platforms: linux/arm64
-          push: true
-          tags: |
-            sa-saopaulo-1.ocir.io/${{ secrets.OCI_TENANCY_NAMESPACE }}/oci-demo:${{ github.run_number }}            
-          file: ./Dockerfile
+    #   - name: Push docker image to OCI
+    #     uses: docker/build-push-action@v6
+    #     with:
+    #       context: .
+    #       platforms: linux/arm64
+    #       push: true
+    #       tags: |
+    #         sa-saopaulo-1.ocir.io/${{ secrets.OCI_TENANCY_NAMESPACE }}/oci-demo:${{ github.run_number }}            
+    #       file: ./Dockerfile
   
