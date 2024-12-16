@@ -1,3 +1,29 @@
+
+###> symfony/framework-bundle ###
+/project/.env.local
+/project/.env.local.php
+/project/.env.*.local
+/project/config/secrets/prod/prod.decrypt.private.php
+/project/public/bundles/
+/project/var/
+/project/vendor/
+###< symfony/framework-bundle ###
+
+###> phpunit/phpunit ###
+/project/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/project/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/asset-mapper ###
+/project/public/assets/
+/project/assets/vendor/
+###< symfony/asset-mapper ###
+
 # Cache and logs (Symfony2)
 /app/cache/*
 /app/logs/*
@@ -50,3 +76,4 @@
 
 # Embedded web-server pid file
 /.web-server-pid
+
