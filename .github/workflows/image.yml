@@ -32,9 +32,6 @@ jobs:
             php-version: '8.4'
             extensions: zip, mbstring, exif, intl
     
-      - name: Change Directory
-        run: cd /github/workspace
-    
       - name: Install Composer
         uses: php-actions/composer@v6
         with:
